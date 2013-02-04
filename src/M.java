@@ -45,15 +45,13 @@ public class M extends Applet implements Runnable {
         final BufferedImage[] spr = new BufferedImage[5];
         final Graphics2D[] gs = new Graphics2D[5];
         for (int i = 0; i < 5; i++) {
-            spr[i] = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);            
-            if (i > 2) //not a tile
-                spr[i] = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+            spr[i] = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
             gs[i] = spr[i].createGraphics();
         }
         gs[4].setColor(new Color(0xFF0000));
-        gs[4].fillRect(0, 0, 64, 64);
+        gs[4].fillRect(0, 0, 32, 32);
         gs[4].setColor(new Color(0xCC0000));
-        gs[4].fillRect(4, 4, 56, 56);
+        gs[4].fillRect(2, 2, 28, 28);
         
         gs[0].setColor(new Color(0x0000FF));
         gs[0].fillRect(0, 0, 32, 32);
@@ -63,20 +61,24 @@ public class M extends Applet implements Runnable {
         gs[2].fillRect(0, 0, 32, 32);
         while(this.g) {
             long now = System.currentTimeMillis();
-            long delta = (now - lastTime);
+            up += (now - lastTime) * 10000;
             lastTime = now;
-            up += delta * 10000;
             boolean a = true;
+            //while (up > 166667) {
             while (up > 166667) {
                 //-----TICK
-                if (k[KeyEvent.VK_LEFT])
-                    po[0][0] -= 10;
-                if (k[KeyEvent.VK_RIGHT])
-                    po[0][0] += 10;
-                if (k[KeyEvent.VK_UP])
-                    po[0][1] -= 10;
-                if (k[KeyEvent.VK_DOWN])
-                    po[0][1] += 10;
+                if (k[KeyEvent.VK_LEFT]) {
+                    if (map[(po[0][0]>>5)-1][po[0][1]>>5] == 0) po[0][0] -= 32;
+                }
+                if (k[KeyEvent.VK_RIGHT]) {
+                    if (map[(po[0][0]>>5)+1][po[0][1]>>5] == 0) po[0][0] += 32;
+                }
+                if (k[KeyEvent.VK_UP]) {
+                    if (map[po[0][0]>>5][(po[0][1]>>5)-1] == 0) po[0][1] -= 32;
+                }
+                if (k[KeyEvent.VK_DOWN]) {
+                    if (map[po[0][0]>>5][(po[0][1]>>5)+1] == 0) po[0][1] += 32;
+                }
                 a = true;
                 up -= 166667;
             }
@@ -103,12 +105,13 @@ public class M extends Applet implements Runnable {
                 for (int i = 0; i < po.length; i++) {
                     g.drawImage(spr[po[i][2]], po[i][0], po[i][1], null);
                 }
-                //if (g2 == null) {
+                if (g2 == null) {
                     g2 = (Graphics2D)getGraphics();
-                //}
-                g2.drawImage(imageBuffer, 0, 0, null);
-                fps++;
-                g.dispose();
+                } else {
+                    g2.drawImage(imageBuffer, 0, 0, null);
+                    fps++;
+                    g.dispose();
+                }
             }
             try {
                 Thread.sleep(0);
