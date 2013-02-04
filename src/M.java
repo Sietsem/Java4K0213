@@ -32,7 +32,7 @@ public class M extends Applet implements Runnable {
         Graphics2D g2 = null;
         int[][] po = new int[1][3];
         po[0][2] = 4; //Player sprite is 4
-        byte[][] map = new byte[64][64];
+        int[][] map = new int[64][64];
         for (int x = 0; x < 64; x++) {
             for (int y = 0; y < 64; y++) {
                 map[x][y] = 0;
@@ -67,10 +67,10 @@ public class M extends Applet implements Runnable {
             //while (up > 166667) {
             while (up > 166667) {
                 //-----TICK
-                if (k[KeyEvent.VK_LEFT] && map[(po[0][0]>>5)-1][po[0][1]>>5] == 0)  po[0][0] -= 32;
+                if (k[KeyEvent.VK_LEFT]  && map[(po[0][0]>>5)-1][po[0][1]>>5] == 0) po[0][0] -= 32;
                 if (k[KeyEvent.VK_RIGHT] && map[(po[0][0]>>5)+1][po[0][1]>>5] == 0) po[0][0] += 32;
-                if (k[KeyEvent.VK_UP] && map[po[0][0]>>5][(po[0][1]>>5)-1] == 0)    po[0][1] -= 32;
-                if (k[KeyEvent.VK_DOWN] && map[po[0][0]>>5][(po[0][1]>>5)+1] == 0)  po[0][1] += 32;
+                if (k[KeyEvent.VK_UP]    && map[po[0][0]>>5][(po[0][1]>>5)-1] == 0) po[0][1] -= 32;
+                if (k[KeyEvent.VK_DOWN]  && map[po[0][0]>>5][(po[0][1]>>5)+1] == 0) po[0][1] += 32;
                 a = true;
                 up -= 166667;
             }
