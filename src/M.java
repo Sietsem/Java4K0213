@@ -67,18 +67,10 @@ public class M extends Applet implements Runnable {
             //while (up > 166667) {
             while (up > 166667) {
                 //-----TICK
-                if (k[KeyEvent.VK_LEFT]) {
-                    if (map[(po[0][0]>>5)-1][po[0][1]>>5] == 0) po[0][0] -= 32;
-                }
-                if (k[KeyEvent.VK_RIGHT]) {
-                    if (map[(po[0][0]>>5)+1][po[0][1]>>5] == 0) po[0][0] += 32;
-                }
-                if (k[KeyEvent.VK_UP]) {
-                    if (map[po[0][0]>>5][(po[0][1]>>5)-1] == 0) po[0][1] -= 32;
-                }
-                if (k[KeyEvent.VK_DOWN]) {
-                    if (map[po[0][0]>>5][(po[0][1]>>5)+1] == 0) po[0][1] += 32;
-                }
+                if (k[KeyEvent.VK_LEFT] && map[(po[0][0]>>5)-1][po[0][1]>>5] == 0)  po[0][0] -= 32;
+                if (k[KeyEvent.VK_RIGHT] && map[(po[0][0]>>5)+1][po[0][1]>>5] == 0) po[0][0] += 32;
+                if (k[KeyEvent.VK_UP] && map[po[0][0]>>5][(po[0][1]>>5)-1] == 0)    po[0][1] -= 32;
+                if (k[KeyEvent.VK_DOWN] && map[po[0][0]>>5][(po[0][1]>>5)+1] == 0)  po[0][1] += 32;
                 a = true;
                 up -= 166667;
             }
